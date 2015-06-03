@@ -13,13 +13,14 @@ class ShortcodesComponent extends Component{
     public function beforeRender(Controller $controller) {
         if(isset($this->controller->request->params['admin']) && $this->controller->request->params['admin'])
             return;
-
-        $nodes = &$this->controller->viewVars['nodes'];
-        foreach ($nodes as &$node) {
-            $shortCodeObj = new ClassShortCode();
-            $node['Node']['excerpt'] = $shortCodeObj->parseString($node['Node']['excerpt']);
-            $node['Node']['body'] = $shortCodeObj->parseString($node['Node']['body']);
+        if(isset($this->controller->viewVars['nodes'])){
+            $nodes = &$this->controller->viewVars['nodes'];
+            foreach ($nodes as &$node) {
+                $shortCodeObj = new ClassShortCode();
+                $node['Node']['excerpt'] = $shortCodeObj->parseString($node['Node']['excerpt']);
+                $node['Node']['body'] = $shortCodeObj->parseString($node['Node']['body']);
+            }
         }
-        
+
     }
 }
